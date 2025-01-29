@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 
-from models.data import clean_data
+from ml_logic.data import clean_data
 
 def preprocess():
     file=__file__
