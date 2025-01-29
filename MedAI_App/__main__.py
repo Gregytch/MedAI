@@ -12,7 +12,12 @@ def preprocess():
     #Clean the data calling the function clean_data
     data=clean_data(df_symp)
 
-    print(data.shape)
+    X=data.drop(['diseases'], axis=1)
+    y=data['diseases']
+
+    print(f"Shape of the dataset : {data.shape}")
+    print(f"Shape of the features X (Symptoms): {X.shape}")
+    print(f"Shape of the target y (Diseases): {X.shape}")
 
     return data
 
