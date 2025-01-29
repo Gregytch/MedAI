@@ -12,14 +12,19 @@ def preprocess():
     #Clean the data calling the function clean_data
     data=clean_data(df_symp)
 
+    #Creating X and y
     X=data.drop(['diseases'], axis=1)
     y=data['diseases']
 
+
+    #Print the shape of the dataset, X and y
     print(f"Shape of the dataset : {data.shape}")
     print(f"Shape of the features X (Symptoms): {X.shape}")
     print(f"Shape of the target y (Diseases): {X.shape}")
 
-    return data
+    #Later -> store in BQ
+
+    return data, X, y
 
 if __name__ == '__main__':
     preprocess()
