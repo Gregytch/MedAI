@@ -20,7 +20,7 @@ def preprocess():
     #Print the shape of the dataset, X and y
     print(f"Shape of the dataset : {data.shape}")
     print(f"Shape of the features X (Symptoms): {X.shape}")
-    print(f"Shape of the target y (Diseases): {X.shape}")
+    print(f"Shape of the target y (Diseases): {y.shape}")
 
     #Later -> store in BQ
 
