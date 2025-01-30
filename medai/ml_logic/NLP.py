@@ -27,7 +27,7 @@ def input_creator(model, columns, text):
     for i in range(len(symptoms)):
         cosine_scores = util.cos_sim(embeddings_symptoms[i], embeddings_columns)
         print(f"{symptoms[i]} matches {columns[np.argmax(cosine_scores)]} with probability {cosine_scores.max()}")
-        if cosine_scores.max() > 0.6:
+        if cosine_scores.max() >= 0.6:
             vector[columns[np.argmax(cosine_scores)]] = 1
     print("-------- Done---------------")
     return vector

@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import os
+import pickle
 
 from ml_logic.data import clean_data
 
@@ -14,13 +15,16 @@ def preprocess():
     # Load data from directory (relative path)
     df_symp = pd.read_csv(os.path.join(dir,'../raw_data/Final_Augmented_dataset_Diseases_and_Symptoms.csv'))
 
+
     #Clean the data calling the function clean_data
     data=clean_data(df_symp)
 
     #Creating X and y
     X=data.drop(['diseases'], axis=1)
     y=data['diseases']
-
+    columns = list(X.columns)
+    with open("dataset_col.pkl", "wb") as f:
+        pickle.dump(columns, f)
 
     #Print the shape of the dataset, X and y
     print(f"Shape of the dataset : {data.shape}")
@@ -61,4 +65,4 @@ def pred(X_pred) :
 
 if __name__ == '__main__':
     data,X,y=preprocess()
-    pred(X[0:1])
+    #pred(X[0:1])
