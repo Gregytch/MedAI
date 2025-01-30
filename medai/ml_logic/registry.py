@@ -16,10 +16,9 @@ def load_model(stage="Production"):
     print("\n💾 Load latest model from local registry..." )
 
     ##RELATIVE DIRECTORY
-    file=__file__
-    dir=os.path.dirname(file)
-    MODEL_PATH = os.path.join(dir, "model_rf.pkl")
-    ENCODER_PATH = os.path.join(dir, "label_encoder.pkl")
+    dir=os.path.dirname(__file__)
+    MODEL_PATH = os.path.join(dir, "../../models/model_rf.pkl")
+    ENCODER_PATH = os.path.join(dir, "../../models/label_encoder.pkl")
 
     ## Load model from directory (works when same directory, otherwise add relative phat above path)
 
