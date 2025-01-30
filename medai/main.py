@@ -87,9 +87,6 @@ def runthough():
     #do the NLP transformation
     vector = input_creator(model, columns, text)
 
-    print(vector.shape)
-    print(vector)
-
     #Create a prediction
     output = pred(vector)
 
