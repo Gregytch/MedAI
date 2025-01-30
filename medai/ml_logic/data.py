@@ -22,7 +22,7 @@ def clean_data(df_symp):
 def remove_disease(df_symp,x=1):
     #Remove diseases with less than x (observations
     class_counts = df_symp['diseases'].value_counts()
-    filtered_classes = class_counts[class_counts > 1].index
+    filtered_classes = class_counts[class_counts > 100].index
     df_symp_disease_filtered = df_symp[df_symp['diseases'].isin(filtered_classes)]
 
     return df_symp_disease_filtered
