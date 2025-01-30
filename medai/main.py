@@ -3,8 +3,10 @@ import pandas as pd
 import os
 
 from ml_logic.data import clean_data
+
 from ml_logic.registry import load_model
 from sklearn.preprocessing import LabelEncoder
+
 
 def preprocess():
     file=__file__
