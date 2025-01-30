@@ -3,6 +3,7 @@ import pandas as pd
 import os
 
 from ml_logic.data import clean_data
+from ml_logic.NLP import input_creator
 
 def preprocess():
     file=__file__
