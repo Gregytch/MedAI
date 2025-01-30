@@ -3,10 +3,10 @@ import pandas as pd
 import pickle
 from sentence_transformers import util
 
-with open("NLP_bio_model.pkl", "rb") as f:
-    model = pickle.load(f)
-with open("dataset_col.pkl", "rb") as f:
-    columns = pickle.load(f)
+#with open("NLP_bio_model.pkl", "rb") as f:
+#    model = pickle.load(f)
+#with open("dataset_col.pkl", "rb") as f:
+#    columns = pickle.load(f)
 
 
 #SentenceTransformer('pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb')
@@ -33,11 +33,11 @@ def input_creator(model, columns, text):
     return vector
 
 
-text1 = "headache, bad fever, rash, nauseous, pressure on the eye"
-input_creator(model, columns,text1)
-
-text2 = "heartburn, tight chest, shaking, nervousness, panic"
-input_creator(model, columns,text2)
-
-text3 = "red eye, very high fever, fruit cake, swollen leg"
-input_creator(model, columns,text3)
+#text1 = "headache, bad fever, rash, nauseous, pressure on the eye"
+#input_creator(model, columns,text1)
+#
+#text2 = "heartburn, tight chest, shaking, nervousness, panic"
+#input_creator(model, columns,text2)
+#
+#text3 = "red eye, very high fever, fruit cake, swollen leg"
+#input_creator(model, columns,text3)
