@@ -4,9 +4,9 @@ import os
 import pickle
 
 from ml_logic.data import clean_data
+from ml_logic.NLP import input_creator
 
 from ml_logic.registry import load_model
-from sklearn.preprocessing import LabelEncoder
 
 
 def preprocess():
@@ -62,7 +62,27 @@ def pred(X_pred) :
     return df_probs_sorted
 
 
+def runthough():
+    ##RELATIVE DIRECTORY
+    dir=os.path.dirname(__file__)
+    NLP_MODEL_PATH = os.path.join(dir, "ml_logic/NLP_bio_model.pkl")
+    COL_PATH = os.path.join(dir, "ml_logic/dataset_col.pkl")
 
+    #get data
+    with open(NLP_MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+    with open(COL_PATH, "rb") as f:
+        columns = pickle.load(f)
+
+    #get user input
+    text = input("Please enter all your current symptoms in plain text, seperated by a comma (,): ")
+
+    #do the NLP transformation
+    vector = input_creator(model, columns, text)
+
+    #Create a prediction
+    output = pred(vector)
+
+#When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':
 if __name__ == '__main__':
-    data,X,y=preprocess()
-    #pred(X[0:1])
+    runthough()
