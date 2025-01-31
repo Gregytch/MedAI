@@ -17,7 +17,7 @@ def load_model(stage="Production"):
 
     ##RELATIVE DIRECTORY
     dir=os.path.dirname(__file__)
-    MODEL_PATH = os.path.join(dir, "../../models/gb_model.pkl")
+    MODEL_PATH = os.path.join(dir, "../../models/XGB_model.pkl")
     ENCODER_PATH = os.path.join(dir, "../../models/label_encoder.pkl")
 
     ## Load model from directory (works when same directory, otherwise add relative phat above path)

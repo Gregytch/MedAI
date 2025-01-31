@@ -5,7 +5,7 @@ from symspellpy import SymSpell
 import os
 import pickle
 
-# #FOR TESTING
+# # #FOR TESTING
 # dir=os.path.dirname(__file__)
 # NLP_MODEL_PATH = os.path.join(dir, "..", "..", "models", "NLP_bio_model.pkl")
 # COL_PATH = os.path.join(dir, "..", "..", "models", "dataset_col.pkl")
@@ -25,6 +25,7 @@ def input_creator(model, columns, text):
 
     # Initialize SymSpell
     sym_spell = SymSpell(max_dictionary_edit_distance=2)
+    dir=os.path.dirname(__file__)
     dictionary_path = os.path.join(dir, "..", "..", "models", "frequency_dictionary_en_82_765.txt")
     # Load a frequency dictionary
     sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)

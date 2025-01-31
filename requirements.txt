@@ -8,3 +8,4 @@ typing
 pydantic
 pickle
 symspellpy
+xgboost
