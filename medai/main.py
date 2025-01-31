@@ -3,9 +3,9 @@ import pandas as pd
 import os
 import pickle
 
-from ml_logic.data import clean_data
-from ml_logic.NLP import input_creator
-from ml_logic.registry import load_model
+from medai.ml_logic.data import clean_data
+from medai.ml_logic.NLP import input_creator
+from medai.ml_logic.registry import load_model
 
 
 def preprocess():
@@ -73,7 +73,7 @@ def runthough():
     ##RELATIVE DIRECTORY
     dir=os.path.dirname(__file__)
     NLP_MODEL_PATH = os.path.join(dir, "../models/NLP_bio_model.pkl")
-    COL_PATH = os.path.join(dir, "../models/dataset_col2.pkl")
+    COL_PATH = os.path.join(dir, "../models/dataset_col.pkl")
 
     #get data
     with open(NLP_MODEL_PATH, "rb") as f:
@@ -97,7 +97,7 @@ def runthrough_api(user_input):
     ##RELATIVE DIRECTORY
     dir=os.path.dirname(__file__)
     NLP_MODEL_PATH = os.path.join(dir, "../models/NLP_bio_model.pkl")
-    COL_PATH = os.path.join(dir, "../models/dataset_col2.pkl")
+    COL_PATH = os.path.join(dir, "../models/dataset_col.pkl")
 
     #get data
     with open(NLP_MODEL_PATH, "rb") as f:
