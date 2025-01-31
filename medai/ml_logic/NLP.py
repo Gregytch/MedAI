@@ -1,12 +1,20 @@
 import numpy as np
 import pandas as pd
-import pickle
 from sentence_transformers import util
+from symspellpy import SymSpell
+import os
+import pickle
 
-#with open("NLP_bio_model.pkl", "rb") as f:
-#    model = pickle.load(f)
-#with open("dataset_col.pkl", "rb") as f:
-#    columns = pickle.load(f)
+# #FOR TESTING
+# dir=os.path.dirname(__file__)
+# NLP_MODEL_PATH = os.path.join(dir, "..", "..", "models", "NLP_bio_model.pkl")
+# COL_PATH = os.path.join(dir, "..", "..", "models", "dataset_col.pkl")
+# print(NLP_MODEL_PATH)
+# #get data
+# with open(NLP_MODEL_PATH, "rb") as f:
+#     model = pickle.load(f)
+# with open(COL_PATH, "rb") as f:
+#     columns = pickle.load(f)
 
 
 #SentenceTransformer('pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb')
@@ -14,6 +22,18 @@ def input_creator(model, columns, text):
     #tokenizer
     symptoms = text.split(",")
     symptoms = [a.strip() for a in symptoms]
+
+    # Initialize SymSpell
+    sym_spell = SymSpell(max_dictionary_edit_distance=2)
+    dictionary_path = os.path.join(dir, "..", "..", "models", "frequency_dictionary_en_82_765.txt")
+    # Load a frequency dictionary
+    sym_spell.load_dictionary(dictionary_path, term_index=0, count_index=1)
+
+    # Correct typos
+    for index, element in enumerate(symptoms):
+        suggestion = sym_spell.lookup_compound(element, max_edit_distance=2)
+        symptoms[index] = (suggestion[0].term)
+
 
     #embeddings
     embeddings_symptoms = model.encode(symptoms)
@@ -33,11 +53,11 @@ def input_creator(model, columns, text):
     return vector
 
 
-#text1 = "headache, bad fever, rash, nauseous, pressure on the eye"
-#input_creator(model, columns,text1)
-#
-#text2 = "heartburn, tight chest, shaking, nervousness, panic"
-#input_creator(model, columns,text2)
+# text1 = "headache, bad fever, rash, nauseous, pressure on the eye"
+# input_creator(model, columns,text1)
+# #
+# text2 = "head ache, headache, hypertenssion,eadache"
+# input_creator(model, columns,text2)
 #
 #text3 = "red eye, very high fever, fruit cake, swollen leg"
 #input_creator(model, columns,text3)
