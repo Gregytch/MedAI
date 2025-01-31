@@ -50,7 +50,7 @@ def pred(X_pred) :
 
     #predict the most likely diseases
     probs=model.predict_proba(X_pred)[0]
-
+    print("\n🧮 Probabilities computed")
     #create dataframe with results
     df_probs = pd.DataFrame({
         "Disease": label_encoder.classes_,  # List of disease names
@@ -73,7 +73,7 @@ def runthough():
     ##RELATIVE DIRECTORY
     dir=os.path.dirname(__file__)
     NLP_MODEL_PATH = os.path.join(dir, "../models/NLP_bio_model.pkl")
-    COL_PATH = os.path.join(dir, "../models/dataset_col.pkl")
+    COL_PATH = os.path.join(dir, "../models/dataset_col2.pkl")
 
     #get data
     with open(NLP_MODEL_PATH, "rb") as f:
@@ -89,6 +89,28 @@ def runthough():
 
     #Create a prediction
     output = pred(vector)
+    return output
+
+def runthrough_api(user_input):
+
+    print( "\n🏃 Starting runthrough" )
+    ##RELATIVE DIRECTORY
+    dir=os.path.dirname(__file__)
+    NLP_MODEL_PATH = os.path.join(dir, "../models/NLP_bio_model.pkl")
+    COL_PATH = os.path.join(dir, "../models/dataset_col2.pkl")
+
+    #get data
+    with open(NLP_MODEL_PATH, "rb") as f:
+        model = pickle.load(f)
+    with open(COL_PATH, "rb") as f:
+        columns = pickle.load(f)
+
+    #do the NLP transformation
+    vector = input_creator(model, columns, user_input)
+
+    #Create a prediction
+    output = pred(vector)
+    return output
 
 #When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':
 if __name__ == '__main__':

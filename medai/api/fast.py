@@ -5,6 +5,7 @@ from fastapi import HTTPException, Depends
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any
+from medai.main import runthrough_api
 
 
 app = FastAPI()
@@ -38,3 +39,14 @@ def get_prediction(row: DataRow):
     res1 = df.sum(axis=1, numeric_only=True)
     res2 = df.mean(axis=1, numeric_only=True)
     return {"result1": f"Here is prediction 1: {res1[0]}", "result2": f"Here is prediction2: {res2[0]}"}
+
+
+@app.get('/diagnosis')
+def get_diagnosis(inputs: str):
+    df = runthrough_api(inputs) # adapt function??
+    output = {}
+    predictions = []
+    for i in range(10): #Check if 10 is length of DF
+        predictions.append(df.iloc[i].to_dict()) # probability checker??
+    output["predictions"] = predictions
+    return output

@@ -6,3 +6,5 @@ pandas
 numpy
 typing
 pydantic
+pickle
+symspellpy
