@@ -1,4 +1,4 @@
-#sentence-transformers
+sentence-transformers
 fastapi
 uvicorn
 requests
@@ -6,3 +6,5 @@ pandas
 numpy
 typing
 pydantic
+symspellpy
+xgboost
