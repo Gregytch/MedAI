@@ -148,5 +148,5 @@ def runthrough_api(user_input):
 
 #When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':
 if __name__ == '__main__':
-    preprocess()
-    #runthough()
+    #preprocess()
+    runthough()
