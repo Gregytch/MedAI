@@ -17,13 +17,13 @@ def load_model(stage="Production"):
 
     ##RELATIVE DIRECTORY
     dir=os.path.dirname(__file__)
-    MODEL_PATH = os.path.join(dir, "../../models/XGB_model.pkl")
+    MODEL_PATH = os.path.join(dir, "../../models/xgb_model_full.pkl")
     ENCODER_PATH = os.path.join(dir, "../../models/label_encoder.pkl")
 
-    ## Load model from directory (works when same directory, otherwise add relative phat above path)
+    ## Load model from directory
 
-    with open(MODEL_PATH, 'rb') as rf:
-        model = pickle.load(rf)
+    with open(MODEL_PATH, 'rb') as xgb:
+        model = pickle.load(xgb)
     print("\n💾 Model loaded")
 
     ##Load Encoder used with model

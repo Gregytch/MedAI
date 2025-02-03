@@ -9,7 +9,7 @@ from medai.ml_logic.registry import load_model
 
 
 def preprocess():
-    print( "\n⚙️ Preprocessing data" )
+    print( "\n⚙️ Cleaning data" )
 
     dir=os.path.dirname(__file__)
 
@@ -26,17 +26,50 @@ def preprocess():
     y=data['diseases']
     columns = list(X.columns)
 
+    print(f"✅ Dataset cleaned")
+    #Print the shape of the dataset, X and y
+    print(f"  --Shape of the dataset : {data.shape}")
+    print(f"  --Shape of the features X (Symptoms): {X.shape}")
+    print(f"  --Shape of the target y (Diseases): {y.shape}")
 
-
+    #Save the columns
     with open(os.path.join(dir,"../models/dataset_col.pkl"), "wb") as f:
         pickle.dump(columns, f)
 
-    #Print the shape of the dataset, X and y
-    print(f"Shape of the dataset : {data.shape}")
-    print(f"Shape of the features X (Symptoms): {X.shape}")
-    print(f"Shape of the target y (Diseases): {y.shape}")
+    print(f"💾 Dataset columns exported in {os.path.join(dir,'/models/dataset_col.pkl')}")
 
-    #Later -> store in BQ
+    print( "\n⚙️ Computing symptoms' weights" )
+    # Initialize dictionary of diseases and their symptoms with weights
+    disease_symptom_dict = {}
+
+    # Iterate through each disease
+    for disease in df_symp["diseases"].unique():
+        #Select all rows related to this disease
+        disease_rows = df_symp[df_symp["diseases"] == disease].drop(columns=["diseases"])
+
+        # Count occurrences of each symptom
+        symptom_counts = disease_rows.sum()
+
+        # Total number of observations for this disease
+        total_cases = len(disease_rows)
+
+        # Compute weight = (occurrences / total cases)
+        symptom_weights = (symptom_counts / total_cases)
+
+        # Remove symptoms with 0 occurrences
+        symptom_weights = symptom_weights[symptom_weights > 0].to_dict()
+
+        # Store in dictionary
+        disease_symptom_dict[disease] = symptom_weights
+
+    print(f"  --✅ Computed weights for {len(disease_symptom_dict)} diseases")
+
+    #Save the dictionary
+
+    with open(os.path.join(dir,"../models/disease_symptom_dict.pkl"), "wb") as f:
+        pickle.dump(disease_symptom_dict, f)
+
+    print(f"💾 Disease x symptom weights dictionary saved in {os.path.join(dir,'/models/disease_symptom_dict.pkl')}")
 
     return data, X, y
 
@@ -60,9 +93,10 @@ def pred(X_pred) :
     #sorting by highest proba
     df_probs_sorted = df_probs.sort_values(by="Probability", ascending=False).reset_index(drop=True)
 
+
     #print results
     print(f"✅ pred() done")
-    print(f"🏥 To ten predicted disease with probability:\n {df_probs_sorted[0:10]}")
+    print(f"🏥 Top ten predicted disease with probability:\n {df_probs_sorted[0:10]}")
 
     return df_probs_sorted
 
@@ -114,5 +148,5 @@ def runthrough_api(user_input):
 
 #When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':
 if __name__ == '__main__':
-    #preprocess()
-    runthough()
+    preprocess()
+    #runthough()
