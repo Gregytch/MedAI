@@ -6,7 +6,7 @@ import pickle
 from medai.ml_logic.data import clean_data
 from medai.ml_logic.NLP import input_creator
 from medai.ml_logic.registry import load_model
-
+from medai.ml_logic.registry import load_symptoms
 
 def preprocess():
     print( "\n⚙️ Cleaning data" )
@@ -98,7 +98,10 @@ def pred(X_pred) :
     print(f"✅ pred() done")
     print(f"🏥 Top ten predicted disease with probability:\n {df_probs_sorted[0:10]}")
 
+
     return df_probs_sorted
+
+
 
 
 def runthough():
@@ -123,7 +126,14 @@ def runthough():
 
     #Create a prediction
     output = pred(vector)
-    return output
+
+
+    # integration of the disease_symptom_dict
+    ## Load disease_symptom_dict
+    disease_symptom_dict=load_symptoms()
+    ## Create a dict with the symptoms
+
+    return output, disease_symptom_dict
 
 def runthrough_api(user_input):
 
