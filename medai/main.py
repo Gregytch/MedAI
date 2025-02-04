@@ -31,6 +31,7 @@ def preprocess():
     print(f"  --Shape of the dataset : {data.shape}")
     print(f"  --Shape of the features X (Symptoms): {X.shape}")
     print(f"  --Shape of the target y (Diseases): {y.shape}")
+    print(f"  --Shape of the target y (Diseases): {y.shape}")
 
     #Save the columns
     with open(os.path.join(dir,"../models/dataset_col.pkl"), "wb") as f:
@@ -43,9 +44,9 @@ def preprocess():
     disease_symptom_dict = {}
 
     # Iterate through each disease
-    for disease in df_symp["diseases"].unique():
-        #Select all rows related to this disease
-        disease_rows = df_symp[df_symp["diseases"] == disease].drop(columns=["diseases"])
+    for disease in data["diseases"].unique():
+        #Select all rows related to this
+        disease_rows = data[data["diseases"] == disease].drop(columns=["diseases"])
 
         # Count occurrences of each symptom
         symptom_counts = disease_rows.sum()
@@ -102,8 +103,6 @@ def pred(X_pred) :
     return df_probs_sorted
 
 
-
-
 def runthough():
 
     print( "\n🏃 Starting runthrough" )
@@ -133,7 +132,10 @@ def runthough():
     disease_symptom_dict=load_symptoms()
     ## Create a dict with the symptoms
 
+    print(disease_symptom_dict)
+
     return output, disease_symptom_dict
+
 
 def runthrough_api(user_input):
 
