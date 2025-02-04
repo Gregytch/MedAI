@@ -20,10 +20,10 @@ def load_model(stage="Production"):
     MODEL_PATH = os.path.join(dir, "../../models/xgb_model_full.pkl")
     ENCODER_PATH = os.path.join(dir, "../../models/label_encoder.pkl")
 
-    ## Load model from directory (works when same directory, otherwise add relative phat above path)
+    ## Load model from directory
 
-    with open(MODEL_PATH, 'rb') as rf:
-        model = pickle.load(rf)
+    with open(MODEL_PATH, 'rb') as xgb:
+        model = pickle.load(xgb)
     print("\n💾 Model loaded")
 
     ##Load Encoder used with model
@@ -31,3 +31,22 @@ def load_model(stage="Production"):
         label_encoder = pickle.load(le)
         print("\n💾 Encoder loaded")
         return model, label_encoder
+
+def load_symptoms():
+    """
+    Load symptoms from local registry
+    """
+
+    print("\n💾 Load symptoms from local registry..." )
+
+    ##RELATIVE DIRECTORY
+    dir=os.path.dirname(__file__)
+    SYMPTOMS_PATH = os.path.join(dir, "../../models/disease_symptom_dict.pkl")
+
+    ## Load symptoms from directory
+
+    with open(SYMPTOMS_PATH, 'rb') as symp:
+        symptoms = pickle.load(symp)
+    print("\n💾 Symptoms loaded")
+
+    return symptoms
