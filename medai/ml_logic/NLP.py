@@ -5,17 +5,6 @@ from symspellpy import SymSpell
 import os
 import pickle
 
-# # #FOR TESTING
-# dir=os.path.dirname(__file__)
-# NLP_MODEL_PATH = os.path.join(dir, "..", "..", "models", "NLP_bio_model.pkl")
-# COL_PATH = os.path.join(dir, "..", "..", "models", "dataset_col.pkl")
-# print(NLP_MODEL_PATH)
-# #get data
-# with open(NLP_MODEL_PATH, "rb") as f:
-#     model = pickle.load(f)
-# with open(COL_PATH, "rb") as f:
-#     columns = pickle.load(f)
-
 
 #SentenceTransformer('pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb')
 def input_creator(model, columns, text):
@@ -35,10 +24,20 @@ def input_creator(model, columns, text):
         suggestion = sym_spell.lookup_compound(element, max_edit_distance=2)
         symptoms[index] = (suggestion[0].term)
 
-
+    dir = dir=os.path.dirname(__file__)
+    print(dir)
     #embeddings
+    if os.path.exists(os.path.join(dir,"../../models/embeddings_columns.pkl")):
+        with open(os.path.join(dir,"../../models/embeddings_columns.pkl"), "rb") as f:
+            embeddings_columns = pickle.load(f)
+        print("File with embeddings already there")
+    else:
+        embeddings_columns = model.encode(columns)
+        with open(os.path.join(dir,"../../models/embeddings_columns.pkl"), "wb") as f:
+            pickle.dump(embeddings_columns, f)
+        print("File with embeddings created newly")
+
     embeddings_symptoms = model.encode(symptoms)
-    embeddings_columns = model.encode(columns)
 
     #Setup output file
     zero_data = np.zeros(shape=(1, len(columns)))
@@ -52,13 +51,3 @@ def input_creator(model, columns, text):
             vector[columns[np.argmax(cosine_scores)]] = 1
     print("-------- Done---------------")
     return vector
-
-
-# text1 = "headache, bad fever, rash, nauseous, pressure on the eye"
-# input_creator(model, columns,text1)
-# #
-# text2 = "head ache, headache, hypertenssion,eadache"
-# input_creator(model, columns,text2)
-#
-#text3 = "red eye, very high fever, fruit cake, swollen leg"
-#input_creator(model, columns,text3)
