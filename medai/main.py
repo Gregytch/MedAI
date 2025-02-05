@@ -54,7 +54,7 @@ def runthrough_api(user_input):
         columns = pickle.load(f)
 
     #do the NLP transformation
-    vector = input_creator(model, columns, user_input)
+    vector, symptoms_to_use = input_creator(model, columns, user_input)
 
     #Create a prediction
     output = pred(vector)
@@ -78,9 +78,11 @@ def runthrough_api(user_input):
         predictions[i]['Symptoms'] = disease_symptom_dict[predictions[i]['Disease']]
 
 
-    #Add the list to the output dictionary
+    #Add the list of diseases and symptom used to make it to the output dictionary
     output_dict["Predictions"] = predictions
+    output_dict["Used_Symptoms"] = symptoms_to_use
 
+    print(f"🏁 runthrough_api() done")
     return output_dict
 
 #When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':

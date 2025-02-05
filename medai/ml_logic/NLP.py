@@ -43,11 +43,17 @@ def input_creator(model, columns, text):
     zero_data = np.zeros(shape=(1, len(columns)))
     vector = pd.DataFrame(zero_data, columns=columns)
 
+    #initialize list of symptoms that will be used for prediction
+    symptoms_to_use = []
+
     # Compute cosine similarity
     for i in range(len(symptoms)):
         cosine_scores = util.cos_sim(embeddings_symptoms[i], embeddings_columns)
         print(f"{symptoms[i]} matches {columns[np.argmax(cosine_scores)]} with probability {cosine_scores.max()}")
         if cosine_scores.max() >= 0.6:
             vector[columns[np.argmax(cosine_scores)]] = 1
+            #append the symtom the list of symptom to use
+            symptoms_to_use.append(symptoms[i])
+
     print("-------- Done---------------")
-    return vector
+    return vector, symptoms_to_use
