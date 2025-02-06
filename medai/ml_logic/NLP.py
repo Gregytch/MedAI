@@ -53,7 +53,7 @@ def input_creator(model, columns, text):
         if cosine_scores.max() >= 0.6:
             vector[columns[np.argmax(cosine_scores)]] = 1
             #append the symtom the list of symptom to use
-            symptoms_to_use.append(symptoms[i])
+            symptoms_to_use.append(columns[np.argmax(cosine_scores)])
 
     print("-------- Done---------------")
     return vector, symptoms_to_use
