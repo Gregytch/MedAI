@@ -83,8 +83,9 @@ def runthrough_api(user_input):
     output_dict["Used_Symptoms"] = symptoms_to_use
 
     print(f"🏁 runthrough_api() done")
+    #print(output_dict["Used_Symptoms"])
     return output_dict
 
 #When we run main.py Will instanciate all code but run only what is under if __name__ == '__main__':
 if __name__ == '__main__':
-    runthrough_api()
+    runthrough_api("fever, eadache, nauseaous, ear painful")
